@@ -13,6 +13,8 @@ Within this paradigm, we make the following decisions.
 
 - Organize your code as classes.
   - Specifically, use ES6 classes.
+  - Since your class represent an instantiatable thing, name it with a noun.
+    E.g., `Command` and `CommandExecutor`, _not_ `executeCommand`.
   - Typically there is one main class per file, which is the default export.
   - Give your file the name of the class, plus the applicable file extension.
   - Exceptions for specialized parts of code exist, where for instance functional programming is more appropriate.
@@ -37,12 +39,23 @@ Within this paradigm, we make the following decisions.
 
 
 ### 1.2. Design for substitutability
-- There exist two kinds of objects:
-  objects that _do_ things and objects that _make_ things
-  - An object should not know how to instantiate its dependencies;
+- There exist three kinds of objects:
+  objects that _are_ things,
+  objects that _do_ things,
+  and objects that _make_ things.
+  - The first group are data structures
+    that represent a logical unit of information.
+    They typically have few dependencies (mostly other data structures).
+  - The second group are classes that process data
+    and/or interact with the environment.
+    They can depend on other objects for behavior,
+    but they should usually not instantiate those.
+  - The third group are factories,
+    whose sole job is to instantiate other objects.
+  - A regular object should not know how to instantiate its dependencies;
     rather, it takes its dependencies as constructor arguments.
     This allows for unit testing and changing behavior.
-  - Dedicated _factories_ know how to construct object trees.
+    Only factories know how to construct object trees.
 
 - Prefer composition over inheritance for reuse of functionality.
   - Inheritance is useful for polymorphism and substitutability;
