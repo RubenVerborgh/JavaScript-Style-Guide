@@ -30,6 +30,11 @@ Within this paradigm, we make the following decisions.
     the consumer might have too much knowledge about the class's state.
     Consider making it a constructor parameter instead.
 
+- Classes have limited knowledge about how other classes work.
+    - Follow the [Law of Demeter](http://misko.hevery.com/2008/07/18/breaking-the-law-of-demeter-is-like-looking-for-a-needle-in-the-haystack/),
+      and expect specific dependencies to be passed in
+      rather than traversing object trees to find them.
+
 - Every class has a corresponding test file with unit tests.
   - Write classes in a unit-testable way (which depends on architecture).
 
