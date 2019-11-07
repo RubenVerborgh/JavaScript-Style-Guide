@@ -88,13 +88,61 @@ Within this paradigm, we make the following decisions.
   - A linter can help you achieve that.
 
 
-### 2.2. Defensive programming
+### 2.2. Readability
+- Avoid variable hiding (i.e. declaring a variable with the same name as one which 
+already exist in scope)
+- Prefer `const` over `let`, and avoid reusing variable names unless it follows natural
+from the syntax (e.g. `for (let i; i < 10; i++) { ... }`)
+- Prefer `let` over `var`: Make your intention of how the variable should be used explicit
+- Make variable names as explicit as possible, and avoid abbreviations
+  - Exceptions are variables used as counter indexes (e.g. `[].map((item, i) => ...)` is ok
+  instead of `[].map((item, itemIndex) => ...)`)
+- Avoid use of deep scopes, e.g. instead of:
+  ```javascript
+  function foo (paramA) {
+    return function (paramB) {
+      function bar () {
+        // do stuff with paramA and paramB
+      }
+      
+      // call on function bar somewhere
+    }
+  }
+  ```
+  Prefer something closer to:
+  ```javascript
+  function foo (paramA) {
+    return function (paramB) {
+      // call on function bar somewhere with paramA and paramB
+    }
+  }
+  
+  function bar (paramA, paramB) {
+    // do stuff with paramA and paramB
+  }
+  ```
+  - If you have to use the former style, group the functions at the end 
+  of the given scope you keep them in.
+    ```javascript
+    function foo (paramA) {
+      return function (paramB) {
+        // call on function bar somewhere
+    
+        function bar () {
+          // do stuff with paramA and paramB
+        }
+      }
+    }
+    ```
+
+
+### 2.3. Defensive programming
 - Validate your assumptions (at the moment you make them).
   - For typing, this is possible through TypeScript.
   - Methods throw an error when called with invalid arguments.
 
 
-### 2.3. Asynchronicity
+### 2.4. Asynchronicity
 - Prefer `async`/`await` over explicit `Promise`s, and prefer those over callbacks.
   - `Promise` wrappers for native Node functions exist.
 
