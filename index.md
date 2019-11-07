@@ -43,7 +43,39 @@ Within this paradigm, we make the following decisions.
   - That class can be independently unit-tested (the script much less so).
 
 
-### 1.2. Design for substitutability
+### 1.2. Use functional programming (FP) where it makes sense
+
+Sometimes it makes more sense to write our code using functional programming instead
+of object oriented programming. We will probably end up with a mix of the two, and
+this section describes some decisions we've made wrt FP.
+
+If you want to learn more about functional programming, we suggest checking
+out [Professor Frisby's Mostly Adequate Guide to Functional Programming](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/).
+
+- Prefer functional programming methods such as `Array.prototype.forEach` and 
+`Array.prototype.map` over syntax such as `for (let i of list) { ... }`
+  - Avoid side effects, and only for methods that is designed for it (e.g. 
+  `Array.prototype.forEach`) or implicitly does it (e.g. `Array.prototype.splice`)
+
+- Prefer [pure functions](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/ch03.html)
+  - A given input will always return the same output
+  - Avoid side effects (e.g. do not mutate the input data)
+  - Prefer arguments explicitly given instead of relying on scoping and global variables
+  - Avoid `this`
+
+- Prefer functions as simple as possible
+  - A function should do one thing
+  - The name of the function be as simple as possible
+  - Functions should be easily reusable for [composition](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/ch05.html) 
+  and [curry](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/ch04.html) functions,
+  and they should be easy to understand in those uses
+  
+- Group reusable functions in each folder into one file, e.g. `Notebook/functions.js`
+  - The functions should have some indication where they're grouped, e.g. prefer 
+  `sortNotebookItems` over `sortItems`
+
+
+### 1.3. Design for substitutability
 - There exist three kinds of objects:
   objects that _are_ things,
   objects that _do_ things,
@@ -71,7 +103,7 @@ Within this paradigm, we make the following decisions.
     and avoids the need to retest inherited behavior.
 
 
-### 1.3. Organize code conceptually in packages
+### 1.4. Organize code conceptually in packages
 - Use a folder hierarchy to represent packages of related code.
 
 - Dependencies are usually tree-shaped.
